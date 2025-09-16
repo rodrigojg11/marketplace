@@ -2,7 +2,7 @@ class Api::V1::UsersController < ApplicationController
   before_action :set_user, only: %w[show update destroy]
   def index
     @users = User.all
-    render json: @users
+    render json: serialized(@users, UserSerializer), status: 200
   end
 
   def show; end
@@ -10,7 +10,7 @@ class Api::V1::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      render json: @user, status: 201
+      render json: serialized(@user, UserSerializer), status: 201
     else
       render json: {message: "Error al crear el usuario!!"}, status: 422
     end
@@ -18,7 +18,7 @@ class Api::V1::UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      render json: @user, status: 201
+      render json: serialized(@user, UserSerializer), status: 201
     else
       render json: {message: "Error al actualizar el usuario!!"}, status: 400
     end

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users
       resources :tokens, only: :create
+      resources :products, except: [:new, :edit]
     end
   end
 end
